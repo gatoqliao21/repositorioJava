@@ -5,17 +5,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import objetos.Pacientes;
-import utils.MysqlConexion;
+import objetos.Paciente;
+import objetos.PacienteDao;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import com.google.gson.Gson;
 
@@ -47,62 +42,38 @@ public class servletGestionPac extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		
-		
-		
-		
-		/*
-         * devuelve un objeto de tipo bufferedReader
-         * siendo este el que me permite leer el cuerpo de la 
-         * solicitud HTTP  donde se encuentra el objeto JSON          
+			/*
+         * creas la instancia de un objeto bufferredReader y la guardas en la variable
+         * reader        
          * */
         BufferedReader reader = request.getReader();
 		
-		
-		
-		/*
-		 * se crea una varibale para  manipular   cadenas de texto  de manera eficiente
-		 * UNA VEZ QUE HAYA SIDO LEIDO 
+			/*
+		 * crea una cadena de caracteres en el mismo objeto sin crear copias nuevas
 		 * */
 		 
-        StringBuilder sb = new StringBuilder();
-        
-        
-        
-      String line;     
+        StringBuilder sb = new StringBuilder();     
+        	String line;     
       
-      
-      
-      
+            
 /*
  * se ejecuta el bucle while hasta que sea null
  * independient5e del tamaño del json enviado como solicitud 
- * enviado por http ,  se agrega al stringbuilder  sb 
- * para que sea manipulado de mejor manera 
- * 
+ * enviado por http ,  se añade al stringbuilder  sb 
  * */
         while ((line = reader.readLine()) != null) {
             sb.append(line);
-        }
-        
-        
-        // 2. Obtener la cadena JSON completa
+            }
+        // 2. se convierte en cadena de tipo String 
         String jsonString = sb.toString();
-
-        
-        
         // imprimes todod el json recepcionado 
         System.out.println(jsonString);
-
+        Gson gson = new Gson();        
+         Paciente paciente = gson.fromJson(jsonString, Paciente.class);
         
-        Gson gson = new Gson();
-        
-        
-        Pacientes paciente = gson.fromJson(jsonString, Pacientes.class);
-        
-        
-        
-        String nombre = paciente.getNombre();
+      /*
+       * 
+       *String nombre = paciente.getNombre();
         String fecha = paciente.getFecha();
         String direccion= paciente.getDireccion();
         String sexo= paciente.getSexo();
@@ -116,53 +87,25 @@ public class servletGestionPac extends HttpServlet {
            System.out.println(paciente.getSexo());
            System.out.println(paciente.getTelefono());
            System.out.println(paciente.getConsulta());
+         
+                */  
         
-		 Connection con = MysqlConexion.conectar();
-       
+
+		 PacienteDao pacienteDAO = new PacienteDao();
+
 		 try {
-			    String query = "INSERT INTO Pacientes(Nombre, Fecha, Sexo, Telefono, Direccion, Consulta) VALUES (?, ?, ?, ?, ?, ?)";
-			    
-			    PreparedStatement ps;
-			    
-			    // Asumiendo que `con` ya está definida y es una conexión válida
-			    ps = con.prepareStatement(query);
+			 pacienteDAO.agregarPaciente(paciente);
 
-			    // Los números en setString() corresponden a la posición de los '?'
-			    // El orden debe coincidir con el de las columnas en la consulta SQL
-			    
-			    ps.setString(1, nombre);    
-			    ps.setString(2, fecha);    
-			    ps.setString(3, sexo);     
-			    ps.setString(4, telefono); 
-			    ps.setString(5, direccion);
-			    ps.setString(6, consulta); 
+			 
 
-			    // Ejecución de la consulta SQL
-			 int valorEjecucion=    ps.executeUpdate();
-/*
- * se imprime el valor devuelto por el metodo executeUpdate 
- * 
- * */
-			    System.out.println("valor ejecucion" + valorEjecucion);
 			    response.getWriter().write("usuario registrado con exito");
 
-			} catch (SQLException e) {
+			} catch (Exception e) {
 			    e.printStackTrace();
 			    response.getWriter().write("ERROR EN EL REGISTRO" + e.getMessage());
 			}
 	
-	//opcional 
-/*
- * response.setContentType("application/json");
-	response.setCharacterEncoding("UTF-8");
-	PrintWriter out = response.getWriter();
-	out.print(jsonString);
-       	
-			
-			out.flush();	
 
- * 
- * */
 		
     }
 }

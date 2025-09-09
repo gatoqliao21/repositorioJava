@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.google.gson.JsonObject;
+
 /**
  * Servlet implementation class ServletRegistro
  */
@@ -44,6 +46,10 @@ public class ServletRegistro extends HttpServlet {
 		String contrasena = request.getParameter("contrasena");
 		
 		
+		
+		
+	    JsonObject jsonResponse = new JsonObject(); // Objeto para la respuesta JSON
+
 		Connection conn= null;
 		PreparedStatement stmt = null;
 		try {
@@ -68,19 +74,25 @@ public class ServletRegistro extends HttpServlet {
             // 5. Ejecución de la consulta
             stmt.executeUpdate();
 
-            response.getWriter().write("usuario registrado con exito");
+            jsonResponse.addProperty("estado", true);
+            jsonResponse.addProperty("mensaje", "Usuario registrado con éxito");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write("Error en el registro: " + e.getMessage());
-        } finally {
+            jsonResponse.addProperty("estado", false);
+            jsonResponse.addProperty("mensaje", "Error en el registro: " + e.getMessage());
+        }  finally {
             try {
-                if(stmt != null) stmt.close();
-                if(conn != null) conn.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
             } catch (SQLException e2) {
                 e2.printStackTrace();
             }
+
+            // Envía la respuesta JSON, ya sea éxito o error
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse.toString());
         }
     }
-
-}
+    }

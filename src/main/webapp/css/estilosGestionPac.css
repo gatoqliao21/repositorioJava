@@ -9,6 +9,20 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+ #contenedorDatos {
+  background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    position:absolute;
+    height: 150px;
+    width: 100%;    
+    
+    position: absolute;
+    left: 80%;
+    top: 5%;
+    }
+
 
 /* Contenedor principal del formulario */
 #contenedorGeneral {
@@ -108,3 +122,10 @@ select {
 .mover-etiqueta {
     right: 20px; 
 }
+
+
+
+
+
+
+

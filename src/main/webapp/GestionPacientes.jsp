@@ -8,11 +8,22 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="assets.js" type="text/javascript"></script>
+<script src="js/assets.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="estilosGestionPac.css">
+<link rel="stylesheet" href="css/estilosGestionPac.css">
+
+
+
 </head>
+
+
 <body>
+
+<div   id="contenedorDatos">
+
+	<h1>Bienvenido :  ${sessionScope.usuarioLogeado.nombre}!</h1>
+    <p>Tu correo es: ${sessionScope.usuarioLogeado.correo}</p>
+</div>
 
 
 
@@ -55,13 +66,15 @@
                 
                 
              
-             <div  id:"contenedor-boton">
-                <button id="btnProcesarGestion" type="submit" >Guardar</button>
-            </div>
+         <div id="contenedor-boton">
+    <button id="btnProcesarGestion" type="submit">Guardar</button>
+			</div>
             </form>
         </div>
     </div>
-    <div id="etiqueta-respuesta"></div>
+    <div id="etiqueta-respuesta">
+    
+    </div>
 
 </body>
 </html>

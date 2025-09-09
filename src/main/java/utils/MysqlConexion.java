@@ -19,7 +19,7 @@ public class MysqlConexion {
 
 	public static Connection conectar() {
 		Connection conn= null;
-        String url= "jdbc:sqlserver://localhost:1433; databaseName=proyecto;encrypt=true;trustServerCertificate=true";
+        String url= "jdbc:sqlserver://localhost:1433; databaseName=proyecto;encrypt=true;trustServerCertificate=true;";
         		
         
         try {

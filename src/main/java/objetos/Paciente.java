@@ -1,14 +1,17 @@
 package objetos;
 
-public class Pacientes {
+public class Paciente {
 
+	
+	int id ;
 	String nombre;
     String fecha;
     String sexo;
     String telefono;
     String direccion;
     String consulta;
-	public Pacientes(String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
+    
+	public Paciente(int id, String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
 		super();
 		this.nombre = nombre;
 		this.fecha = fecha;
@@ -17,7 +20,17 @@ public class Pacientes {
 		this.direccion = direccion;
 		this.consulta = consulta;
 	}
-	public Pacientes() {
+    
+	public Paciente(String nombre, String fecha, String sexo, String telefono, String direccion, String consulta) {
+		super();
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.sexo = sexo;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.consulta = consulta;
+	}
+	public Paciente() {
 		super();
 	}
 	public String getNombre() {
@@ -38,6 +51,14 @@ public class Pacientes {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getTelefono() {
 		return telefono;
 	}

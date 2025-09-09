@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import objetos.Usuario;
 import utils.MysqlConexion;
 
 import java.io.IOException;
@@ -40,8 +42,12 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+	     String accion = request.getParameter("accion");
+	        
+	        if ("mostrarRegistro".equals(accion)) {
+	            // Lógica para redirigir a la página de registro
+	            request.getRequestDispatcher("/Registro1.jsp").forward(request, response);
+	        }
 	
 	}
 
@@ -81,16 +87,18 @@ public class ServletLogin extends HttpServlet {
 			
 			
 			
-			String nombre_usuario="";
-			
+			Usuario usuario = null;
 			
 			
 			//iteramos la tabla 
-			while(rs.next()) {
+			if(rs.next()) {
 				usuarioEncontrado = true;
-						
-				nombre_usuario=  rs.getString("Nombre");
-				break;
+				// se instancia un objeto de tipo usuario para almeacenar los datos 
+				usuario = new Usuario();
+				usuario.setId( rs.getInt("id")  );				
+				usuario.setNombre(rs.getString("nombre"));
+				usuario.setCorreo(rs.getNString("correo"));
+				usuario.setContrasena(rs.getString("contrasena"));
 			}
 			
 			
@@ -98,9 +106,18 @@ public class ServletLogin extends HttpServlet {
 	        Map<String, Object> respuesta = new HashMap<>();
 
 	        if (usuarioEncontrado) {
-	            respuesta.put("estado", true);
-	            respuesta.put("mensaje", "¡Bienvenido!");
-	            respuesta.put("nombre_usuario",nombre_usuario);
+	        	
+	        	
+                HttpSession session = request.getSession();
+                
+                // se guardan los datos de la sesion 
+                session.setAttribute("usuarioLogeado", usuario); 
+	            respuesta.put("estado",true);
+                respuesta.put("mensaje", "¡Bienvenido, " + usuario.getNombre() + "!");
+	            respuesta.put("nombre_usuario",usuario.getNombre());
+	            
+
+
 	            
 	            
 	        } else {
@@ -108,15 +125,28 @@ public class ServletLogin extends HttpServlet {
 	            respuesta.put("mensaje", "Credenciales incorrectas.");
 	        }
 
+	        
+	        // se utiliza la libreria gson para poder enviarlo al ajax
 	        Gson gson = new Gson();
+	        // se  realiza una conversion con el metodos(TOJSON)  -SERIALIZACION
 	        String jsonResponse = gson.toJson(respuesta);
 	        
+	        //SE  DEFINE EL PARAMETRO DE RESPUESTA SERVIDOR- CLIENTE   
 	        
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
+	        response.setContentType("application/json");  // ENCABEZADO HTTP 
+	        response.setCharacterEncoding("UTF-8");//ENVIO DE CARACTERES ESPECIALES
+	        
 
+
+
+	        
 	        PrintWriter out = response.getWriter();
-
+/*
+ *INSTANCIAR UN OBJETO DE TIPO PRINTWRITER PARA PODER UTILIZAR SUS METODOS
+ *Y  PSOTUMO ESCRIBIR EN EL CUERPO DE LA RESPUESTA ENVIADA POR EL PROTOCOLO HTTP 
+ *
+ */
+	        
 	        out.print(jsonResponse);
 	        out.flush();
 	        

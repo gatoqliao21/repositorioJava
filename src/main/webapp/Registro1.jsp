@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="assets.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="estilos.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="js/assets.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="estilos.css">
 </head>
 <body>
     <div id="registro-contenedor">
@@ -36,4 +39,3 @@
     </div>
     <div id="etiqueta-respuesta"></div>
 </body>
-</html>
