@@ -1,0 +1,14 @@
+# Archivos de Eclipse
+.metadata/
+.settings/
+.classpath
+.project
+
+# Archivos de compilación de Java
+bin/
+build/
+*.class
+
+
+# Ignorar librerías
+WEB-INF/lib/

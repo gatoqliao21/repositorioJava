@@ -8,7 +8,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="js/assets.js" type="text/javascript"></script>
+<script src="js/gestionPac.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="css/estilosGestionPac.css">
 
@@ -19,15 +19,70 @@
 
 <body>
 
+<div  id="Contenedor" >
+
+
 <div   id="contenedorDatos">
 
-	<h1>Bienvenido :  ${sessionScope.usuarioLogeado.nombre}!</h1>
-    <p>Tu correo es: ${sessionScope.usuarioLogeado.correo}</p>
+	<h1>Bienvenido ${sessionScope.usuarioLogeado.nombre} ${sessionScope.usuarioLogeado.apellido} !</h1>
+    
 </div>
 
 
+<br>
+<br>
+<br>
 
-    <div id="contenedorGeneral">
+
+<p>Aquí podrás reservar, pagar, reprogramar tus citas presenciales o teleconsultas y acceder a tu información de manera fácil y segura.</p>
+
+
+<br>
+
+<div  id="ContenedorDatosUsuario">
+	<div  id="datos">
+			<div  id="cabeceraInformativa">
+				<div class="perfil_img">
+	             <img src=" " alt="perfil">
+	              </div>
+		
+				<div class="perfil-txt">
+	                <span class="sp_perfil">Mi Perfil Clínico<br>
+	                    <button type="button" style="border-style: none; padding: 0px; background: transparent;" aria-label="Editar mi perfil clinico" data-toggle="modal" data-target="#myModal">Editar mi perfil <i class="fa fa-pencil-alt" aria-hidden="true"></i></button>
+	                </span>
+	            </div>
+	
+			
+			</div>	
+	
+	
+		
+	
+	</div>
+	<div  id="tablaCitasReg"></div>
+
+
+</div>
+
+
+<button id="miBoton">Registrar paciente</button>
+
+
+
+
+
+
+
+
+
+
+
+    <div 					id="contenedorGeneral">
+    
+    
+    <div id="cerrar-formulario"	>
+    
+    </div>
         <div id="titulo">
             <strong>Nuevo Paciente</strong>
         </div>
@@ -75,6 +130,6 @@
     <div id="etiqueta-respuesta">
     
     </div>
-
+</div>
 </body>
 </html>

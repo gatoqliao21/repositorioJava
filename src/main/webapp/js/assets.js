@@ -4,10 +4,13 @@ function redireccionarARegistro(){
 }
 
 
-$(document).ready(function(){
-	
-	
 
+
+$(document).ready(function(){
+
+	
+	
+	
 	function mostrarEtiquetaTemporal(mensaje) {
 		
 		
@@ -102,62 +105,6 @@ $(document).ready(function(){
 
 
 
-
-	$('#btnProcesarGestion').on('click', function(event){
-
-		event.preventDefault();
-		let nombre = $('#txtNombre').val();
-		let fecha = $('#txtfecha').val();
-		let sexo = $('#cboSexo').val();
-		let telefono = $('#txtTelefono').val();
-		let direccion = $('#txtDireccion').val();
-		let consulta= $('#txtMotivo').val();
-		
-		const jsonObject={'nombre': nombre   , "fecha" : fecha  ,"sexo":sexo,"telefono":telefono,
-			"direccion":direccion,"consulta":consulta }
-		console.log(jsonObject);
-		
-		
-	
-		
-		
-		
-	
-		$.ajax({
-			url:'servletGestionPac',
-			type: 'POST',
-			contentType: 'application/json', // SERVLET RECIBE UN TIPO DE DATO JSON
-			 data: JSON.stringify(jsonObject),
-			/**
-			 *  SE COLOCA LA DATA QUE RECIBE EL SERVIDOR 
-			 * 
-			 *  */ 
-			 dataType: 'text',   // EL TIPO DE DATO DE LA RESPUESTA DEL SERVIDOR 
-			success : function(response){
-			
-				console.log( "respuesta del servidor: "+" "+response)
-				
-				console.log(typeof response)
-				
-				mostrarEtiquetaTemporal("¡Bienvenido, " + response +"!");
-				
-			}
-			
-			,
-			error: function(xhr, status, error){
-				alert('Ocurrió un error en el registro: ' + error);
-				console.log(error)
-			}
-		});
-
-	
-
-				
-				
-		
-		
-		
-	})
 
 	
 	
